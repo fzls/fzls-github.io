@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title><![CDATA[TODOs of this blog]]></title>
+      <url>https://fzls.github.io/miscellaneous/TODO.html</url>
+      <content type="html"><![CDATA[<p>适配raytaylorism主题还剩下来的一些事</p>
+<a id="more"></a>
+<h1 id="raytaylorism-主题自定义TODO"><a href="#raytaylorism-主题自定义TODO" class="headerlink" title="raytaylorism 主题自定义TODO"></a>raytaylorism 主题自定义TODO</h1><ol>
+<li>修改about.json中的项目相关的图片</li>
+<li>修改about.json末尾的捐赠图片</li>
+<li>修改首页幻灯片的图片和内容</li>
+<li>about.json中添加技能</li>
+<li>reading.json添加已读/正在读/待读的书籍</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> Miscellaneous </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> todo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[My Resume]]></title>
       <url>https://fzls.github.io/me/my-resume.html</url>
       <content type="html"><![CDATA[<p>个人简介 version 6<br><a id="more"></a></p>

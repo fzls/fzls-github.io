@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://fzls.github.io/"/>
-  <updated>2017-03-07T19:05:25.000Z</updated>
+  <updated>2017-03-07T23:18:17.442Z</updated>
   <id>https://fzls.github.io/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TODOs of this blog</title>
+    <link href="https://fzls.github.io/miscellaneous/TODO.html"/>
+    <id>https://fzls.github.io/miscellaneous/TODO.html</id>
+    <published>2017-03-07T23:15:24.000Z</published>
+    <updated>2017-03-07T23:18:17.442Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;适配raytaylorism主题还剩下来的一些事&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Miscellaneous" scheme="https://fzls.github.io/categories/miscellaneous/"/>
+    
+    
+      <category term="todo" scheme="https://fzls.github.io/tags/todo/"/>
+    
+  </entry>
   
   <entry>
     <title>My Resume</title>
