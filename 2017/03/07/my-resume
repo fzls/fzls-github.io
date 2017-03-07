@@ -25,7 +25,7 @@ Python：主要用来写一些爬虫以及自动化脚本（抓取论坛感兴�
 PHP：主要使用Larave">
 <meta property="og:type" content="article">
 <meta property="og:title" content="My Resume">
-<meta property="og:url" content="http://yoursite.com/2017/03/07/my-resume/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/03/07/my-resume">
 <meta property="og:site_name" content="名字什么的最讨厌了呢">
 <meta property="og:description" content="陈计15700078110fzls.zju@gmail.com杭州市浙江大学紫金港校区 青溪二舍
 学习经历2013-2017 浙江大学 信息管理与信息系统专业（本科）
@@ -35,7 +35,7 @@ PHP：主要使用Larave">
 C/C++：主要写一些算法题以及写游戏
 Python：主要用来写一些爬虫以及自动化脚本（抓取论坛感兴趣的帖子/模拟网站签到等）
 PHP：主要使用Larave">
-<meta property="og:updated_time" content="2017-03-07T15:47:11.580Z">
+<meta property="og:updated_time" content="2017-03-07T16:55:11.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="My Resume">
 <meta name="twitter:description" content="陈计15700078110fzls.zju@gmail.com杭州市浙江大学紫金港校区 青溪二舍
@@ -79,6 +79,18 @@ PHP：主要使用Larave">
                 
                     <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
                 
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="#">/</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://github.com/fzls">Github</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/2017/03/07/my-resume">Resume</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="#">//</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://pickup.moec.me/home">Pickup</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="http://pilipili.chenji-meow.cn">Pilipili</a></li>
+                
                 </ul>
             </div>
     </nav>
@@ -99,7 +111,7 @@ PHP：主要使用Larave">
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/03/07/my-resume/" data-id="cizzppuw900002scgfeb7257m" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/03/07/my-resume" data-id="cizzqacza0000oocgistx0ao3" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -144,7 +156,26 @@ PHP：主要使用Larave">
 </ul>
 <h1 id="实习-项目经历"><a href="#实习-项目经历" class="headerlink" title="实习/项目经历"></a>实习/项目经历</h1><ul>
 <li>2016/7至2016/9在杭州量子金融信息服务有限公司作为后端实习生进行实习，主要进行后台管理系统的雏形搭建</li>
-<li>使用Laravel写过一个简单的图站，在感兴趣期间实现了部分主要功能</li>
+<li><a href="http://pilipili.chenji-meow.cn/" target="_blank" rel="external">http://pilipili.chenji-meow.cn/</a><ul>
+<li>一个简单的图站</li>
+</ul>
+</li>
+<li><a href="https://pickup.moec.me" target="_blank" rel="external">https://pickup.moec.me</a><ul>
+<li>一个简化版的Uber，使用vue.js开发前端，laravel开发的接口作为后端，oauth 3.0为模型建构的账号系统，letsencrypyt提供HTTPS支持</li>
+</ul>
+</li>
+<li><a href="https://api.moec.me/" target="_blank" rel="external">https://api.moec.me/</a><ul>
+<li>前面的pickup对应的后端接口</li>
+</ul>
+</li>
+<li><a href="https://chenji-meow.cn:9898/home" target="_blank" rel="external">https://chenji-meow.cn:9898/home</a><ul>
+<li>前面的pickup对应的账号授权系统</li>
+</ul>
+</li>
+<li><a href="http://bicycle.chenji-meow.cn" target="_blank" rel="external">http://bicycle.chenji-meow.cn</a><ul>
+<li>一个用于查看附近的杭州公告自行车剩余空位以及车数的历史变化的小应用，数据接口通过对官方APP进行http监听得到，主要是之前有段时间早上去实习经常需要用到公共自行车，但下楼前发现还有，到了就没有了，所以通过这个应用观察数目变化趋势来避免白走</li>
+</ul>
+</li>
 </ul>
 <h1 id="职位意向"><a href="#职位意向" class="headerlink" title="职位意向"></a>职位意向</h1><ul>
 <li>目前对做游戏很感兴趣，想做服务端工程师(C++/Java)(＞﹏＜)</li>
@@ -163,7 +194,7 @@ PHP：主要使用Larave">
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/2017/03/07/my-resume/">
+    <a href="/2017/03/07/my-resume">
     <time datetime="2017-03-07T14:50:07.000Z" class="entry-date">
         2017-03-07
     </time>
@@ -217,7 +248,7 @@ PHP：主要使用Larave">
       <ul>
         
           <li>
-            <a href="/2017/03/07/my-resume/">My Resume</a>
+            <a href="/2017/03/07/my-resume">My Resume</a>
           </li>
         
       </ul>
