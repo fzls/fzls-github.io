@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://fzls.github.io/"/>
-  <updated>2017-03-07T23:18:17.442Z</updated>
+  <updated>2017-03-12T17:05:04.982Z</updated>
   <id>https://fzls.github.io/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>杭州公共自行车app抓包分析</title>
+    <link href="https://fzls.github.io/%E6%8A%80%E6%9C%AF/%E6%9D%AD%E5%B7%9E%E5%85%AC%E5%85%B1%E8%87%AA%E8%A1%8C%E8%BD%A6app%E6%8A%93%E5%8C%85%E5%88%86%E6%9E%90.html"/>
+    <id>https://fzls.github.io/技术/杭州公共自行车app抓包分析.html</id>
+    <published>2017-03-12T15:46:05.000Z</published>
+    <updated>2017-03-12T17:05:04.982Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;去年实习时因个人需求需要获取历史的公共自行车各站点的车辆数目变化情况，但没有公开的数据接口，所以对其安卓app以及微信应用进行抓包分析，获取其数据接口，从而对历史的数据进行记录和分析。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="https://fzls.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="抓包" scheme="https://fzls.github.io/tags/%E6%8A%93%E5%8C%85/"/>
+    
+      <category term="爬虫" scheme="https://fzls.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>TODOs of this blog</title>
