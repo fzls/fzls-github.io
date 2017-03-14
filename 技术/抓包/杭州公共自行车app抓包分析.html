@@ -1,62 +1,291 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  
-  
-    
-    <entry>
-      <title><![CDATA[酷家乐面试]]></title>
-      <url>https://fzls.github.io/%E6%8A%80%E6%9C%AF/%E9%9D%A2%E8%AF%95/%E9%85%B7%E5%AE%B6%E4%B9%90%E9%9D%A2%E8%AF%95.html</url>
-      <content type="html"><![CDATA[<p>今天去酷家乐面了后端开发岗位，遇到了几道算法题，一时没想出来，因此面试完后查找了相关材料记录于此<br><a id="more"></a></p>
-<h1 id="杨辉矩阵"><a href="#杨辉矩阵" class="headerlink" title="杨辉矩阵"></a>杨辉矩阵</h1><blockquote>
-<p>假如一个m*n的矩阵在行（从左到右）和列（从上到下）的方向上分别递增，那么我们称这个矩阵为杨辉矩阵，现问如何在O(m+n)的时间查找一个数x是否在该矩阵内</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><p>递归完成，复杂度为O(m*n)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(matrix, x, y, val)</span>:</span></div><div class="line">    /* check x,y <span class="keyword">is</span> <span class="keyword">in</span> bounds */</div><div class="line">    <span class="keyword">if</span> matrix[x][y] &gt; val:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> matrix[x][y] == val:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> find(matrix, x+<span class="number">1</span>, y, val) || find(matrix, x, y+<span class="number">1</span>, val)</div></pre></td></tr></table></figure>
-<h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><p>遍历数组，复杂度为O(m*n)，这种方案没有利用到原始数据的特殊规律，所以不可取</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">def find(matrix, val)</div><div class="line">    for row in matrix:</div><div class="line">        for v in row:</div><div class="line">            if v == val:</div><div class="line">                return True</div><div class="line"></div><div class="line">    return False</div></pre></td></tr></table></figure>
-<h3 id="思路三"><a href="#思路三" class="headerlink" title="思路三"></a>思路三</h3><p>由原始数组的特性可以发现对于位于x,y的元素而言，其左上角的数据均小于它，其右下角的数据均大于它，而另外两个角落的数据则不确定。<br>此外考虑到原始数据沿二维递增，可以联想到一维时我们面对递增序列，可以使用二分查找来在<code>log n</code>的时间内找到元素，因此可以推出二维时的做法：对于一个子矩阵（用左上角和右下角的坐标表示） [(x1, y1), (x2,y2)]，我们可以找到其中心点((x1+x2)/2, (y1+y2)/2)，假设其值为x，我们要找的值为val，那么有下列算法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(matrix, x1, y1, x2, y2, val)</span>:</span></div><div class="line">    /* TODO：需要添加临界状态 */</div><div class="line">    mid_x = (x1 + x2) / <span class="number">2</span></div><div class="line">    mid_y = (y1 + y2) / <span class="number">2</span></div><div class="line">    x = matrix[mid_x][mid_y]</div><div class="line"></div><div class="line">    <span class="keyword">if</span> x == val:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">elif</span> x &lt; val:</div><div class="line">        /* 在这种情况下左上角的数据可以全部被排除掉 */</div><div class="line">        <span class="keyword">return</span> find(matrix, mid_x, mid_y, x2, y2) /* 右下角 */</div><div class="line">            || find(matrix, x1, mid_y, mid_x, y2) /* 左下角 */</div><div class="line">            || find(matrix, mid_x, y1, x2, mid_y) /* 右上角 */</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        /* 在这种情况下右下角的数据可以全部被排除掉 */</div><div class="line">        <span class="keyword">return</span> find(matrix, x1, y1, mid_x, mid_y) /* 左上角 */</div><div class="line">            || find(matrix, x1, mid_y, mid_x, y2) /* 左下角 */</div><div class="line">            || find(matrix, mid_x, y1, x2, mid_y) /* 右上角 */</div></pre></td></tr></table></figure>
-<p>容易得到递推公式为T(m*n) = 3*T(m*n/4) + O(1), 套用主公式，其复杂度为O((m*n)^(log4(3)))</p>
-<h3 id="思路四（从其他博文获得）"><a href="#思路四（从其他博文获得）" class="headerlink" title="思路四（从其他博文获得）"></a>思路四（从其他博文获得）</h3><p>考虑(x,y)四周的元素，会发现(x-1,y), (x,y-1)小于它， (x+1,y), (x, y+1)大于它，这四个分别标记为a,b,c,d，假如我们考虑a,d这两个数，我们会发现如果我们将目标值与当前值进行比较，若目标值大于当前值，则其也大于a，同时也大于所有a左侧的数，也就是说我们可以将从a到其左侧的数全部排除；同理当目标值小于当前值时，可以将d及其下方的数全部排除。根据这个思路我们可以考虑从右上角出发，每次消去一行或一列，由于总共有m行，n列，所以最高不会超过m+n次就能获得结果。左下角出发同理。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(matrix, x, y, val)</span>:</span></div><div class="line">    /* TODO：添加x,y为边界情况时的处理 */</div><div class="line">    _v = matrix[x][y]</div><div class="line">    <span class="keyword">if</span> _v == val:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">elif</span> _v &lt; val:</div><div class="line">        /* 此时v左侧的数据均可排除 */</div><div class="line">        <span class="keyword">return</span> find(matrix, x, y+<span class="number">1</span>, val)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        /* 此时v下侧的数据均可排除 */</div><div class="line">        <span class="keyword">return</span> find(matrix, x<span class="number">-1</span>, y, val)</div></pre></td></tr></table></figure>
-<blockquote>
-<p>解法参考自：<a href="http://m.blog.csdn.net/article/details?id=7694771" target="_blank" rel="external">young氏矩阵</a></p>
-</blockquote>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>面对具有特殊结构的数据，注意从多个角度去观察，今天在面试的时候找不到解法的最重要的原因是始终默认从左上角找起，大概算是思维定式的锅吧，或者说是思维不够灵活。</p>
-<hr>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<h1 id="投三次硬币的策略"><a href="#投三次硬币的策略" class="headerlink" title="投三次硬币的策略"></a>投三次硬币的策略</h1><blockquote>
-<p>问两个人分别选择一个投三次硬币的结果，然后无限次投硬币，直到双方中的某个先出现，则该人获胜，现问是否后手有优势？</p>
-</blockquote>
-<p>当时想了很久，考虑了自动状态机，概率论等，最终还是没有做出结果。在查阅了资料后发现，关键在于取先手的前n-1个，第n个取0或1，从中选概率较高的那种，主要思想是若前者失败后，再匹配成功前后者必先匹配成功。具体解法见参考博文。</p>
-<blockquote>
-<p>解法参考自：<a href="http://www.matrix67.com/blog/archives/6015" target="_blank" rel="external">Penney 的游戏：正所谓后发制人，先发制于人</a></p>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术 </category>
-            
-            <category> 面试 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-            <tag> 智力题 </tag>
-            
-        </tags>
-        
-    </entry>
     
-    <entry>
-      <title><![CDATA[杭州公共自行车app抓包分析]]></title>
-      <url>https://fzls.github.io/%E6%8A%80%E6%9C%AF/%E6%8A%93%E5%8C%85/%E6%9D%AD%E5%B7%9E%E5%85%AC%E5%85%B1%E8%87%AA%E8%A1%8C%E8%BD%A6app%E6%8A%93%E5%8C%85%E5%88%86%E6%9E%90.html</url>
-      <content type="html"><![CDATA[<p>去年实习时因个人需求需要获取历史的公共自行车各站点的车辆数目变化情况，但没有公开的数据接口，所以对其安卓app以及微信应用进行抓包分析，获取其数据接口，从而对历史的数据进行记录和分析。</p>
+
+    <title>杭州公共自行车app抓包分析 | 喵喵喵</title>
+    <meta name="author" content="风之凌殇">
+    
+    <meta name="description" content="一个有趣的小世界~">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="杭州公共自行车app抓包分析"/>
+    <meta property="og:site_name" content="名字什么的最讨厌了呢"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="名字什么的最讨厌了呢" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="green">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">名字什么的最讨厌了呢</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav green darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/images/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">风之凌殇</p>
+                        <p class="desc">Web后端/游戏/技术宅</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav green darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/miscellaneous/">
+                    miscellaneous <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/技术/">
+                    技术 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/抓包/">
+                    抓包 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-1" collapse-level="1">
+                <a class="no-padding" href="/categories/技术/面试/">
+                    面试 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/me/">
+                    me <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper green">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/技术/">技术</a><a class="breadcrumb" href="/categories/技术/抓包/">抓包</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>杭州公共自行车app抓包分析</h1>
+    
+
+
+            </div>
+            <time class="red-link-context" datetime="2017-03-12T15:46:05.000Z"><a href="/技术/抓包/杭州公共自行车app抓包分析.html">2017-03-12</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/抓包/" class="chip red lighten-1">抓包</a>
+        
+            <a href="/tags/爬虫/" class="chip red lighten-1">爬虫</a>
+        
+    </div>
+
+
+            <div class="toc red-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#安卓app"><span class="section table-of-contents-text">安卓app</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#抓包工具"><span class="section table-of-contents-text">抓包工具</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#分析结果"><span class="section table-of-contents-text">分析结果</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#杭州公交车微信接口"><span class="section table-of-contents-text">杭州公交车微信接口</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#接口列表"><span class="section table-of-contents-text">接口列表</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#微信版本获取数据"><span class="section table-of-contents-text">微信版本获取数据</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Step-1-遍历公共自行车微信接口，并保存为json文件"><span class="section table-of-contents-text">Step 1. 遍历公共自行车微信接口，并保存为json文件</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Step-2-利用经纬度信息找到该车站，从而获取其信息"><span class="section table-of-contents-text">Step 2. 利用经纬度信息找到该车站，从而获取其信息</span></a></li></ol></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#一个简陋的前端"><span class="section table-of-contents-text">一个简陋的前端</span></a></li></ol>
+</div>
+
+
+            <div class="entry red-link-context">
+                <p>去年实习时因个人需求需要获取历史的公共自行车各站点的车辆数目变化情况，但没有公开的数据接口，所以对其安卓app以及微信应用进行抓包分析，获取其数据接口，从而对历史的数据进行记录和分析。</p>
 <a id="more"></a>
 <h1 id="安卓app"><a href="#安卓app" class="headerlink" title="安卓app"></a>安卓app</h1><h2 id="抓包工具"><a href="#抓包工具" class="headerlink" title="抓包工具"></a>抓包工具</h2><ul>
 <li>使用wireshark进行<ul>
@@ -224,149 +453,366 @@
 </ul>
 </li>
 </ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 技术 </category>
-            
-            <category> 抓包 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 抓包 </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-        
-    </entry>
+
+                
+<p class="red-link-context">
+    <a href="/技术/面试/酷家乐面试.html" rel="next" title="酷家乐面试">
+    上一篇：酷家乐面试
+  </a>
+</p>
+
+
+
+<p class="red-link-context">
+    <a href="/miscellaneous/TODO.html" rel="next" title="TODOs of this blog">
+    下一篇：TODOs of this blog
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="技术/抓包/杭州公共自行车app抓包分析.html" data-title="杭州公共自行车app抓包分析" data-url="https://fzls.github.io/技术/抓包/杭州公共自行车app抓包分析.html"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'fzls'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large red">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect cyan" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse light-green"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer green darken-1">
     
-    <entry>
-      <title><![CDATA[TODOs of this blog]]></title>
-      <url>https://fzls.github.io/miscellaneous/TODO.html</url>
-      <content type="html"><![CDATA[<p>适配raytaylorism主题还剩下来的一些事</p>
-<a id="more"></a>
-<h1 id="raytaylorism-主题自定义TODO"><a href="#raytaylorism-主题自定义TODO" class="headerlink" title="raytaylorism 主题自定义TODO"></a>raytaylorism 主题自定义TODO</h1><ol>
-<li>修改about.json中的项目相关的图片</li>
-<li>修改about.json末尾的捐赠图片</li>
-<li>修改首页幻灯片的图片和内容</li>
-<li>about.json中添加技能</li>
-<li>reading.json添加已读/正在读/待读的书籍</li>
-</ol>
-]]></content>
-      
-        <categories>
+    <div class="container">
+        <div class="row">
             
-            <category> Miscellaneous </category>
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/fzls" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                <div class="site-visitors-container white-text">
+                    <span>
+                        <i class="fa fa-user"></i>
+                        <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+                    </span>
+                    <span>&nbsp;|&nbsp;</span>
+                    <span>
+                        <i class="fa fa-eye"></i>
+                        <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+                    </span>
+                </div>
+            </div>
             
-        </categories>
-        
-        
-        <tags>
+
             
-            <tag> todo </tag>
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+            </div>
             
-        </tags>
-        
-    </entry>
+        </div>
+    </div>
     
-    <entry>
-      <title><![CDATA[My Resume]]></title>
-      <url>https://fzls.github.io/me/my-resume.html</url>
-      <content type="html"><![CDATA[<p>个人简介 version 6<br><a id="more"></a></p>
-<h1 id="陈计"><a href="#陈计" class="headerlink" title="陈计"></a>陈计</h1><p>15700078110<br><code>fzls.zju@gmail.com</code><br><code>https://fzls.github.io</code><br>杭州市浙江大学紫金港校区 青溪二舍</p>
-<h1 id="学习经历"><a href="#学习经历" class="headerlink" title="学习经历"></a>学习经历</h1><p>2013-2017 浙江大学 信息管理与信息系统专业（本科）</p>
-<h1 id="技术技能"><a href="#技术技能" class="headerlink" title="技术技能"></a>技术技能</h1><ul>
-<li>编程语言：<ul>
-<li>对<code>C/C++</code>/<code>Python</code>/<code>PHP</code>/<code>Java</code>比较熟悉<ul>
-<li><code>C/C++</code>：主要写一些算法题以及写游戏</li>
-<li><code>Python</code>：主要用来写一些爬虫以及自动化脚本（抓取论坛感兴趣的帖子/模拟网站签到等）</li>
-<li><code>PHP</code>：主要使用Laravel框架进行网站后端数据接口的实现以及后端驱动的网站模板渲染</li>
-<li><code>Java</code>：由于前面的语言满足了我大部分的需求，所以平时使用频率不高，但是使用起来没有问题，对其面向对象/容器/多线程/网络/数据库等基本概念和注意点也有一定的了解，对spring框架也有一定的了解</li>
-</ul>
-</li>
-<li>对其他语言（如<code>JavaScript</code>/<code>Assembly</code>/<code>Ruby</code>/<code>Lua</code>）等也有基本的了解和简单的使用</li>
-</ul>
-</li>
-<li>编程技术<ul>
-<li>对常见的算法有所了解，能够在实际项目中进行应用，并能对其复杂度进行估计</li>
-<li>对常见的数据结构有所了解，知道其内部机理，能够对其中的大部分进行实现，并在项目中通过自己实现或调用库函数对其进行应用</li>
-<li>利用Laravel框架进行过几次网站后端的编写，对其有不少实践经验，并对其源代码进行过学习，对整体的架构设计以及部分功能的实现有一定的了解</li>
-<li>对游戏引擎相关的技术有所了解（仍在学习中）</li>
-<li>对容器化的思想有过一定的了解，并在个人项目中利用docker compose技术简化了其部署流程</li>
-<li>对MySQL有一些实践经验，并通过通读其参考手册，对其内在机理有了更深的理解</li>
-<li>接触过redis，在项目中有过一些简单的应用（主要作为应用缓存）</li>
-<li>对多线程编程的常见模型有所了解，以及多线程编程时的注意点也有一定的了解</li>
-<li>对前端的基本技术（<code>CSS3</code>/ <code>HTML5</code>/<code>JavaScript</code>）以及一些常见的库（<code>Bootstrap</code>/<code>jQuery</code>/<code>Vue.js</code>）有一定的实践应用</li>
-<li>对常见的一些序列化的技术（XML，json，yaml）有所了解并有一定的实践经验</li>
-<li>对<code>RabbitMQ</code>、<code>kafka</code>等消息队列中间件有所了解，暂无较大规模的实践经验</li>
-<li>对常见的一些设计模式有所了解，并在编码时进行使用</li>
-<li>对Linux有一定的使用经验，能够借助git, nginx, docker等软件进行应用的部署和配置</li>
-<li>使用<code>sock.io</code>写过简单的web在线聊天室应用</li>
-<li>能够使用git等版本管理工具对源代码进行版本管理</li>
-<li>对第三方认证的常见模型<code>Oauth 2.0</code>有所了解以及实践，利用该技术构建过个人项目中的用户认证及授权模块</li>
-<li>对安卓也有过简单的学习，用其写过几个简单的应用</li>
-<li>对正则表达式也有过一定的了解，能够较为熟练地利用它进行模式的识别</li>
-<li>对密码学的常见加密算法也有所了解，并能够将其应用在互联网应用中（如密码的保存，通讯的加密等）</li>
-</ul>
-</li>
-</ul>
-<h1 id="实习-项目经历"><a href="#实习-项目经历" class="headerlink" title="实习/项目经历"></a>实习/项目经历</h1><ul>
-<li>2016/7至2016/9在杭州量子金融信息服务有限公司作为后端实习生进行实习，主要进行后台管理系统的雏形搭建</li>
-<li><a href="http://pilipili.chenji-meow.cn/" target="_blank" rel="external">http://pilipili.chenji-meow.cn/</a><ul>
-<li>一个简单的图站</li>
-</ul>
-</li>
-<li><a href="https://pickup.moec.me" target="_blank" rel="external">https://pickup.moec.me</a><ul>
-<li>一个简化版的Uber，使用vue.js开发前端，laravel开发的接口作为后端，oauth 3.0为模型建构的账号系统，letsencrypyt提供HTTPS支持</li>
-</ul>
-</li>
-<li><a href="https://api.moec.me/" target="_blank" rel="external">https://api.moec.me/</a><ul>
-<li>前面的pickup对应的后端接口</li>
-</ul>
-</li>
-<li><a href="https://chenji-meow.cn:9898/home" target="_blank" rel="external">https://chenji-meow.cn:9898/home</a><ul>
-<li>前面的pickup对应的账号授权系统</li>
-</ul>
-</li>
-<li><a href="http://bicycle.chenji-meow.cn" target="_blank" rel="external">http://bicycle.chenji-meow.cn</a><ul>
-<li>一个用于查看附近的杭州公告自行车剩余空位以及车数的历史变化的小应用，数据接口通过对官方APP进行http监听得到，主要是之前有段时间早上去实习经常需要用到公共自行车，但下楼前发现还有，到了就没有了，所以通过这个应用观察数目变化趋势来避免白走</li>
-</ul>
-</li>
-</ul>
-<h1 id="职位意向"><a href="#职位意向" class="headerlink" title="职位意向"></a>职位意向</h1><ul>
-<li>目前对做游戏很感兴趣，想做服务端工程师(C++/Java)(＞﹏＜)</li>
-<li>对网站后端相关的技术也很感兴趣，认为成为一个后端工程师(PHP/Java/Python)也是一个很不错的选择(/≧▽≦)/</li>
-</ul>
-<h1 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h1><ul>
-<li>对计算机领域的各种技术都很感兴趣，会主动去了解一些有趣的技术</li>
-<li>喜欢阅读各种技术书籍，了解各种感兴趣的新技术</li>
-<li>对代码风格有一定的洁癖，推崇固定的排版风格（如tab/空格，缩进等），使用统一的命名方式，在编码过程中注重代码的可重用性、模块性、简洁性以及可维护性</li>
-<li>愿意学习新技术</li>
-<li>喜欢各种萌萌哒的东西o(^▽^)o</li>
-<li>热爱编程。</li>
-</ul>
-]]></content>
-      
-        <categories>
+
+    <div class="footer-copyright red-link-context">
+        <div class="container">
+            © 2017 风之凌殇, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('red lighten-2');
+
             
-            <category> Me </category>
+            // 添加new标签
+            $('').append('<span class="new badge red"></span>');
             
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Resume </tag>
-            
-        </tags>
-        
-    </entry>
-    
-  
-  
-</search>
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-85758851-2', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
